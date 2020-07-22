@@ -1,10 +1,9 @@
 <template>
-  <div>
-    <v-container fluid class="home-padding-top home-bg" style="border: 1px solid brown;">
+  <div class="home-wrapper">
+    <v-container fluid class="home-padding-top home-bg" style="border: 1px solid yellow;">
       <v-row class="text-center hero">
-        <v-col cols="12" style="padding-left: 2rem">
+        <v-col cols="12" class="home-col">
           <p
-            style="border: 1px solid green"
             class="text-left font-weight-bold text-size title-padding-top text-color-white"
           >Convert currencies in real-time.</p>
         </v-col>
@@ -14,7 +13,7 @@
       </v-row>
     </v-container>
 
-    <v-container fluid>
+    <v-container fluid style="border: 1px solid darkred;">
       <v-row class="result">
         <v-col class="mb-4">
           <p class="result-text font-weight-regular" align="left">
@@ -39,48 +38,83 @@ export default {
 </script>
 
 <style lang="scss">
-.home-padding-top {
-  padding-top: 3rem !important;
-}
-.home-bg {
-  background-color: #363a3e;
+.home-wrapper {
+  .home-padding-top {
+    padding-top: 3rem !important;
+  }
+  .home-bg {
+    background-color: #363a3e;
 
-  .hero {
-    height: 30vh;
-    position: relative;
+    .hero {
+      height: 30vh;
+      position: relative;
+      border: 1px solid green;
+
+      @media (max-width: 896px) {
+        height: 50vh;
+      }
+
+      .home-col {
+        padding: 0 2rem;
+        @media (max-width: 345px) {
+          padding: 0 1rem;
+        }
+
+        .text-size {
+          font-size: 2rem;
+
+          @media (max-width: 345px) {
+            font-size: 1.2rem;
+            text-align: center !important;
+          }
+        }
+
+        .title-padding-top {
+          padding-top: 5rem;
+        }
+
+        .text-color-white {
+          color: white;
+        }
+      }
+      .converter-col {
+        position: relative;
+        // margin-top: 5rem;
+        padding-left: 2rem;
+      }
+    }
   }
 
-  .text-size {
-    font-size: 2rem;
+  .result {
+    height: calc(50vh + 6vh);
+    align-items: center;
+    justify-content: flex-start;
+
+    .mb-4 {
+      height: 100%;
+    }
+
+    @media (max-width: 896px) {
+      height: 100%;
+    }
   }
 
-  .title-padding-top {
-    padding-top: 5rem;
+  .result-text {
+    padding-top: 10%;
+    padding-left: 6rem;
+
+    @media (max-width: 345px) {
+      padding-left: 0rem;
+      text-align: center;
+    }
+
+    .font-size-lg {
+      font-size: 40px;
+
+      @media (max-width: 345px) {
+        font-size: 1.2rem;
+      }
+    }
   }
-
-  .text-color-white {
-    color: white;
-  }
-}
-
-.result {
-  height: calc(50vh + 6vh);
-  align-items: center;
-  justify-content: flex-start;
-}
-
-.result-text {
-  padding-top: 10%;
-  padding-left: 6rem;
-
-  .font-size-lg {
-    font-size: 40px;
-  }
-}
-
-.converter-col {
-  position: absolute;
-  margin-top: 7rem;
-  padding-left: 2rem;
 }
 </style>
