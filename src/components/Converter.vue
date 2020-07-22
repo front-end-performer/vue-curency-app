@@ -1,37 +1,44 @@
 <template>
-  <v-card :loading="loading" class="my-12" max-width="80%">
+  <v-card :loading="loading" class="my-12">
     <v-card-text>
       <v-row align="center" class="mx-0">
-        <v-form
-          ref="form"
-          v-model="valid"
-          lazy-validation
-          style="width: 100%; border: 1px solid red; display: flex; align-items: center;"
-        >
-          <v-col cols="3">
-            <v-text-field v-model="amount" :rules="amountRules" label="Amount" required></v-text-field>
+        <v-form ref="form" v-model="valid" lazy-validation class="form">
+          <v-col cols="12" sm="3">
+            <v-text-field
+              v-model="amount"
+              :rules="amountRules"
+              label="Amount"
+              required
+            ></v-text-field>
           </v-col>
-          <v-col cols="3">
+          <v-col cols="12" sm="3">
             <v-select
-              v-model="select"
+              v-model="from"
               :items="items"
               :rules="[v => !!v || 'Item is required']"
-              label="Item"
+              menu-props="auto"
+              label="From"
               required
             ></v-select>
           </v-col>
-          <v-img width="auto" height="auto" src="../assets/switcher.png"></v-img>
-          <v-col cols="3">
+          <v-img
+            width="20"
+            height="20"
+            class="img"
+            src="../assets/switcher.png"
+          ></v-img>
+          <v-col cols="12" sm="3">
             <v-select
-              v-model="select"
+              v-model="to"
               :items="items"
+              menu-props="auto"
+              label="To"
               :rules="[v => !!v || 'Item is required']"
-              label="Item"
               required
             ></v-select>
           </v-col>
-          <v-col cols="3">
-            <v-btn class="primary" @click="reserve">Convert</v-btn>
+          <v-col cols="12" sm="3">
+            <v-btn class="primary" @click="convert">Convert</v-btn>
           </v-col>
         </v-form>
       </v-row>
@@ -40,8 +47,10 @@
 </template>
 
 <script>
+// import axios from "axios";
+
 export default {
-  name: "HelloWorld",
+  name: "Converter",
   data: () => ({
     loading: false,
     selection: 1,
@@ -51,9 +60,9 @@ export default {
       v => !!v || "Amount is required",
       v => (v && v.length >= 1) || "Amount must be valid"
     ],
-    select: null,
-    items: ["Item 1", "Item 2", "Item 3", "Item 4"],
-    checkbox: false
+    from: null,
+    to: null,
+    items: ["USD", "EUR", "GBP", "JPY"]
   }),
 
   methods: {
@@ -66,13 +75,48 @@ export default {
     resetValidation() {
       this.$refs.form.resetValidation();
     },
-    reserve() {
+    convert() {
       this.loading = true;
+      const form = {
+        amount: this.amount,
+        items1: this.from,
+        items2: this.to
+      };
+      this.$store.dispatch("convert", form);
 
-      setTimeout(() => (this.loading = false), 2000);
+      setTimeout(() => (this.loading = false), 1000);
     }
   }
 };
 </script>
 
+<style lang="scss">
+.v-card {
+  max-width: 80% !important;
 
+  @media (max-width: 900px) {
+    max-width: 100% !important;
+  }
+}
+.form {
+  width: 100%;
+  display: flex;
+  align-items: center;
+
+  .v-image__image--cover {
+    background-size: inherit !important;
+  }
+
+  .img {
+    margin: 0 auto;
+  }
+
+  @media (max-width: 600px) {
+    display: initial;
+
+    .v-image__image--cover {
+      text-align: center;
+    }
+  }
+}
+</style>

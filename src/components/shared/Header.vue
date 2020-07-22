@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app color="transparent" absolute dense flat style="border: 1px solid red!important">
+  <v-app-bar app color="transparent" absolute dense flat>
     <div class="d-flex align-center">
       <router-link to="/" class="logo">CURRENCY CONV.</router-link>
     </div>

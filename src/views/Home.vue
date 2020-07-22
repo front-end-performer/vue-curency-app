@@ -1,11 +1,13 @@
 <template>
   <div class="home-wrapper">
-    <v-container fluid class="home-padding-top home-bg" style="border: 1px solid yellow;">
+    <v-container fluid class="home-padding-top home-bg">
       <v-row class="text-center hero">
         <v-col cols="12" class="home-col">
           <p
             class="text-left font-weight-bold text-size title-padding-top text-color-white"
-          >Convert currencies in real-time.</p>
+          >
+            Convert currencies in real-time.
+          </p>
         </v-col>
         <v-col class="converter-col">
           <app-converter></app-converter>
@@ -13,13 +15,13 @@
       </v-row>
     </v-container>
 
-    <v-container fluid style="border: 1px solid darkred;">
+    <v-container fluid class="container-converter">
       <v-row class="result">
         <v-col class="mb-4">
           <p class="result-text font-weight-regular" align="left">
             From 1 Euro =
             <br />
-            <span class="font-weight-bold font-size-lg">1.2 USD</span>
+            <span class="font-weight-bold font-size-lg">{{ result }}</span>
           </p>
         </v-col>
       </v-row>
@@ -28,11 +30,17 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import Converter from "../components/Converter.vue";
 export default {
   name: "Home",
   components: {
     appConverter: Converter
+  },
+  computed: {
+    ...mapGetters({
+      result: "result"
+    })
   }
 };
 </script>
@@ -48,7 +56,6 @@ export default {
     .hero {
       height: 30vh;
       position: relative;
-      border: 1px solid green;
 
       @media (max-width: 896px) {
         height: 50vh;
@@ -81,6 +88,10 @@ export default {
         position: relative;
         // margin-top: 5rem;
         padding-left: 2rem;
+
+        @media (max-width: 600px) {
+          padding-left: 12px;
+        }
       }
     }
   }
@@ -103,7 +114,8 @@ export default {
     padding-top: 10%;
     padding-left: 6rem;
 
-    @media (max-width: 345px) {
+    @media (max-width: 600px) {
+      padding-top: 65%;
       padding-left: 0rem;
       text-align: center;
     }
@@ -115,6 +127,9 @@ export default {
         font-size: 1.2rem;
       }
     }
+  }
+  .container-converter {
+    height: 50vh;
   }
 }
 </style>
