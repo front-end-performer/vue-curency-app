@@ -17,7 +17,9 @@ export default new Vuex.Store({
   actions: {
     convert: ({ commit }, form) => {
       axios
-        .post(`https://v6.exchangerate-api.com/v6//latest/${form.items1}`)
+        .post(
+          `https://v6.exchangerate-api.com/v6/${process.env.VUE_APP_API_KEY}/latest/${form.items1}`
+        )
         .then(res => {
           let result;
 
