@@ -1,54 +1,53 @@
 <template>
-  <v-card :loading="loading" class="my-12">
+  <v-card>
     <v-card-text>
-      <v-row align="center" class="mx-0">
-        <v-form ref="form" v-model="valid" lazy-validation class="form">
-          <v-col cols="12" sm="3">
+      <v-container fluid grid-list-xl fill-height>
+        <v-layout wrap align-center>
+          <v-flex xs12 sm3 d-flex>
             <v-text-field
+              class="border_0"
               v-model="amount"
+              :typedAmount="typedAmount"
               :rules="amountRules"
               label="Amount"
               required
+              filled
             ></v-text-field>
-          </v-col>
-          <v-col cols="12" sm="3">
+          </v-flex>
+          <v-flex xs12 sm3 d-flex>
             <v-select
+              class="border_0"
               v-model="from"
               :items="items"
               :rules="[v => !!v || 'Item is required']"
               menu-props="auto"
               label="From"
               required
+              filled
             ></v-select>
-          </v-col>
-          <v-img
-            width="20"
-            height="20"
-            class="img"
-            src="../assets/switcher.png"
-          ></v-img>
-          <v-col cols="12" sm="3">
+          </v-flex>
+          <v-flex xs12 sm3 d-flex>
             <v-select
+              class="border_0"
               v-model="to"
               :items="items"
+              :rules="[v => !!v || 'Item is required']"
               menu-props="auto"
               label="To"
-              :rules="[v => !!v || 'Item is required']"
               required
+              filled
             ></v-select>
-          </v-col>
-          <v-col cols="12" sm="3">
+          </v-flex>
+          <v-col cols="12" sm="3" class="text-align">
             <v-btn class="primary" @click="convert">Convert</v-btn>
           </v-col>
-        </v-form>
-      </v-row>
+        </v-layout>
+      </v-container>
     </v-card-text>
   </v-card>
 </template>
 
 <script>
-// import axios from "axios";
-
 export default {
   name: "Converter",
   data: () => ({
@@ -64,23 +63,23 @@ export default {
     to: null,
     items: ["USD", "EUR", "GBP", "JPY"]
   }),
-
+  computed: {
+    typedAmount() {
+      const form = {
+        amount: this.amount,
+        from: this.from,
+        to: this.to
+      };
+      return this.$store.dispatch("input", form);
+    }
+  },
   methods: {
-    validate() {
-      this.$refs.form.validate();
-    },
-    reset() {
-      this.$refs.form.reset();
-    },
-    resetValidation() {
-      this.$refs.form.resetValidation();
-    },
     convert() {
       this.loading = true;
       const form = {
         amount: this.amount,
-        items1: this.from,
-        items2: this.to
+        from: this.from,
+        to: this.to
       };
       this.$store.dispatch("convert", form);
 
@@ -91,11 +90,29 @@ export default {
 </script>
 
 <style lang="scss">
+.border_0.v-text-field > .v-input__control > .v-input__slot:before {
+  border-style: none;
+  border-radius: 5px;
+}
+.border_0.v-text-field > .v-input__control > .v-input__slot:after {
+  border-style: none;
+}
+
+.v-text-field.v-text-field--enclosed .v-text-field__details {
+  position: absolute;
+  top: 100%;
+  width: 100%;
+}
+
 .v-card {
   max-width: 80% !important;
 
   @media (max-width: 900px) {
     max-width: 100% !important;
+  }
+
+  .container.grid-list-xl .layout .flex {
+    width: 200px;
   }
 }
 .form {
@@ -118,5 +135,8 @@ export default {
       text-align: center;
     }
   }
+}
+.text-align {
+  text-align: center;
 }
 </style>
