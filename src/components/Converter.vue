@@ -7,6 +7,7 @@
             <v-text-field
               class="border_0"
               v-model="amount"
+              type="number"
               :typedAmount="typedAmount"
               :rules="amountRules"
               label="Amount"

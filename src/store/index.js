@@ -38,7 +38,9 @@ export default new Vuex.Store({
         .catch(error => console.log(error));
     },
     input: ({ commit }, form) => {
-      commit("INPUT", form);
+      setTimeout(() => {
+        commit("INPUT", form);
+      }, 800);
     }
   },
   modules: {},

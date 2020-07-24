@@ -61,6 +61,7 @@ export default {
 
     .converter-col {
       position: relative;
+      padding: 2rem;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -70,7 +71,7 @@ export default {
         font-size: 2rem;
 
         @media (max-width: 345px) {
-          font-size: 1.2rem;
+          font-size: 1.5rem;
           text-align: center !important;
         }
       }
@@ -83,6 +84,7 @@ export default {
 
   .result {
     height: 50vh;
+    background-color: #fffeb9b6;
     .result-col {
       display: flex;
       justify-content: center;
@@ -90,12 +92,17 @@ export default {
 
       .underline {
         min-width: 1%;
+        height: auto;
         border-bottom: 6px dotted #2f82d6;
+
+        @media (max-width: 400px) {
+          min-width: 12%;
+        }
       }
     }
 
     @media (max-width: 896px) {
-      height: 100%;
+      height: 50vh;
     }
 
     .amount-text {
