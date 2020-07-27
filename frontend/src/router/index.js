@@ -12,7 +12,7 @@ const routes = [
     component: Display
   },
   {
-    path: "/recent",
+    path: "/api/recent",
     name: "Recent",
     // component: Recent
     // route level code-splitting

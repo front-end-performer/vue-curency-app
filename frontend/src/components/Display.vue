@@ -2,9 +2,11 @@
   <v-container fluid class="padding_0">
     <v-row class="hero">
       <v-col class="converter-col">
-        <p class="font-weight-bold text-size text-color-white">Convert currencies in real-time.</p>
+        <p class="font-weight-bold text-size text-color-white">
+          Convert currencies in real-time.
+        </p>
         <app-converter></app-converter>
-        <v-btn raised color="#2f82d6" to="/recent" class="btn">
+        <v-btn raised color="#2f82d6" to="/api/recent" class="btn">
           <span class="link">View conversion history ></span>
         </v-btn>
       </v-col>
@@ -14,26 +16,27 @@
       <v-col class="result-col">
         <div class="underline">
           <transition name="fade">
-            <p v-if="amount" class="amount-text font-weight-regular" align="left">
-              {{amount}}
+            <p
+              v-if="amount"
+              class="amount-text font-weight-regular"
+              align="left"
+            >
+              {{ amount }}
               <transition name="fade">
-                <span v-if="from">{{ from + " = "}}</span>
+                <span v-if="from">{{ from + " = " }}</span>
               </transition>
             </p>
           </transition>
           <transition name="slide-fade">
-            <p
-              v-if="result"
-              class="result-text font-weight-bold"
-              align="left"
-            >{{result}} {{result && to}}</p>
+            <p v-if="result" class="result-text font-weight-bold" align="left">
+              {{ result }} {{ result && to }}
+            </p>
           </transition>
         </div>
       </v-col>
     </v-row>
   </v-container>
 </template>
-
 
 <script>
 import { mapGetters } from "vuex";
@@ -54,7 +57,7 @@ export default {
 };
 </script>
 
-  <style lang="scss">
+<style lang="scss">
 .padding_0 {
   padding: 0 !important;
 
