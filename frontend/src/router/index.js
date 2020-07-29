@@ -14,12 +14,7 @@ const routes = [
   {
     path: "/api/recent",
     name: "Recent",
-    // component: Recent
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Recent.vue")
+    component: () => import("../views/Recent.vue")
   }
 ];
 

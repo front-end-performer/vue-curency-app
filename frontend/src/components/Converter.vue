@@ -6,9 +6,8 @@
           <v-flex xs12 sm3 d-flex>
             <v-text-field
               class="border_0"
-              v-model="amount"
+              v-model="form.amount"
               type="number"
-              :typedAmount="typedAmount"
               :rules="amountRules"
               label="Amount"
               required
@@ -18,7 +17,7 @@
           <v-flex xs12 sm3 d-flex>
             <v-select
               class="border_0"
-              v-model="from"
+              v-model="form.from"
               :items="items"
               :rules="[v => !!v || 'Item is required']"
               menu-props="auto"
@@ -30,7 +29,7 @@
           <v-flex xs12 sm3 d-flex>
             <v-select
               class="border_0"
-              v-model="to"
+              v-model="form.to"
               :items="items"
               :rules="[v => !!v || 'Item is required']"
               menu-props="auto"
@@ -55,34 +54,26 @@ export default {
     loading: false,
     selection: 1,
     valid: true,
-    amount: "",
+    form: {
+      amount: "",
+      from: "",
+      to: ""
+    },
     amountRules: [
       v => !!v || "Amount is required",
       v => (v && v.length >= 1) || "Amount must be valid"
     ],
-    from: null,
-    to: null,
     items: ["USD", "EUR", "GBP", "JPY"]
   }),
-  computed: {
-    typedAmount() {
-      const form = {
-        amount: this.amount,
-        from: this.from,
-        to: this.to
-      };
-      return this.$store.dispatch("input", form);
-    }
-  },
   methods: {
     convert() {
       this.loading = true;
-      const form = {
-        amount: this.amount,
-        from: this.from,
-        to: this.to
+      const inputData = {
+        amount: this.form.amount,
+        from: this.form.from,
+        to: this.form.to
       };
-      this.$store.dispatch("convert", form);
+      this.$store.dispatch("convert", inputData);
 
       setTimeout(() => (this.loading = false), 1000);
     }

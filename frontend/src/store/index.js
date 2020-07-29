@@ -6,48 +6,45 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    amount: null,
-    from: "",
-    to: "",
     result: null,
-    recent: []
+    recent: [],
+    isLoading: false
   },
   mutations: {
+    ISLOADING(state, loading) {
+      state.isLoading = loading;
+    },
     CONVERT_CURRENCY(state, result) {
       state.result = result;
     },
-    INPUT(state, { amount, from, to }) {
-      state.amount = amount;
-      state.from = from;
-      state.to = to;
-    },
     RECENT(state, data) {
-      console.log("data", data);
       data.map(el => {
         state.recent.push(el);
       });
     }
   },
   actions: {
-    convert: ({ commit }, form) => {
-      axios
-        .post(`${process.env.VUE_APP_API_KEY}/latest/${form.from}`)
-        .then(res => {
-          let result;
+    convert: ({ commit }, inputData) => {
+      commit("ISLOADING", true);
+      try {
+        axios
+          .post(`/latest/${inputData.from}`)
+          .then(res => {
+            console.log("response convert", res);
+            let result;
 
-          for (let key in res.data.conversion_rates) {
-            if (key === form.to) {
-              result = form.amount * res.data.conversion_rates[key];
+            for (let key in res.data.conversion_rates) {
+              if (key === inputData.to) {
+                result = inputData.amount * res.data.conversion_rates[key];
+              }
             }
-          }
-          commit("CONVERT_CURRENCY", result);
-        })
-        .catch(error => console.log(error));
-    },
-    input: ({ commit }, form) => {
-      setTimeout(() => {
-        commit("INPUT", form);
-      }, 800);
+            commit("CONVERT_CURRENCY", result);
+            commit("ISLOADING", false);
+          })
+          .catch(error => console.log(error));
+      } catch (err) {
+        console.log(err);
+      }
     },
     initialHistory: ({ commit }) => {
       axios
@@ -66,14 +63,8 @@ export default new Vuex.Store({
     result: state => {
       return state.result;
     },
-    amount: state => {
-      return state.amount;
-    },
-    from: state => {
-      return state.from;
-    },
-    to: state => {
-      return state.to;
+    isLoading: state => {
+      return state.isLoading;
     },
     recent: state => {
       return state.recent;
